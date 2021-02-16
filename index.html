@@ -39,7 +39,7 @@
           async function fetchIssues() {
             if (!issues) {
               const { url, ...options } = endpoint("GET /repos/:owner/:repo/issues", {
-                owner: "mateogianolio",
+                owner: "joelhooks",
                 repo: "issuance",
                 auth: 'b7bb203132631193d7e7afd99fd588a1a3a59d84'
               });
