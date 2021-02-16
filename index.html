@@ -16,6 +16,10 @@
       import htm from 'https://unpkg.com/htm?module'
       import { endpoint } from 'https://cdn.skypack.dev/@octokit/endpoint';
       import marked from 'https://unpkg.com/marked@0.8.0/lib/marked.esm.js';
+      
+      const GITHUB_USERNAME = 'joelhooks'
+      const GITHUB_REPO_NAME = 'issuance'
+      const GITHUB_NO_SCOPE_TOKEN = 'b7bb203132631193d7e7afd99fd588a1a3a59d84'
 
       const html = htm.bind(React.createElement)
 
@@ -39,9 +43,9 @@
           async function fetchIssues() {
             if (!issues) {
               const { url, ...options } = endpoint("GET /repos/:owner/:repo/issues", {
-                owner: "joelhooks",
-                repo: "issuance",
-                auth: 'b7bb203132631193d7e7afd99fd588a1a3a59d84'
+                owner: GITHUB_USERNAME,
+                repo: GITHUB_REPO_NAME,
+                auth: GITHUB_NO_SCOPE_TOKEN
               });
               const res = await fetch(url, options);
               setIssues(await res.json());
@@ -58,7 +62,7 @@
         return html`
           <div className="posts">
             ${(issues || [])
-              .filter(({ user }) => user.login === 'joelhooks')
+              .filter(({ user }) => user.login === GITHUB_USERNAME)
               .filter(({ number }) => !search || Number(search.slice(1)) === number)
               .map(({
                 number,
